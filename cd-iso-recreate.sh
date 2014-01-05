@@ -14,7 +14,7 @@
 
 set -x
 # The Base Directory, assumes you git-cloned the script as root
-BASEDIR="/root/GUI-Installer"
+BASEDIR="/root/ubuntu-openstack-iso-builder"
 
 # This directory will contain additional files and directories
 # that need to be copied over to the root directory of the
