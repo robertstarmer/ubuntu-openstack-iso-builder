@@ -69,7 +69,7 @@ fi
 echo "deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/havana main" >> /etc/apt/sources.list
 # sed -e 's/us.*com/mirror.ctocllab.cisco.com/' -i /etc/apt/sources.list
 apt-get update 
-apt-get install reprepro genisoimage wget gnupg-agent stress vim -y
+apt-get install reprepro genisoimage wget gnupg-agent stress vim git dpkg-dev -y
 
 which gpg > /dev/null
 if [ $? -eq 1 ]; then

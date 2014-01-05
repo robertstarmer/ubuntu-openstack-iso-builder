@@ -1,0 +1,9 @@
+FinalCD
+build
+cdsource
+indices
+key.inc
+proto-build/puppet_openstack_builder
+source
+ubuntu-12.04.3-server-amd64.iso
+ubuntu-12.04.3-desktop-amd64.iso
