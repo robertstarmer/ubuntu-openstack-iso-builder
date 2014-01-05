@@ -66,6 +66,9 @@ if [ $? -gt 0 ]; then
 fi
 
 # Install app
+echo "deb http://ubuntu-cloud.archive.canonical.com/ubuntu precise-updates/havana main" >> /etc/apt/sources.list
+# sed -e 's/us.*com/mirror.ctocllab.cisco.com/' -i /etc/apt/sources.list
+apt-get update 
 apt-get install reprepro genisoimage wget gnupg-agent stress vim -y
 
 which gpg > /dev/null
@@ -304,12 +307,17 @@ cd $SOURCEDIR/keyring/$KEYRING/keyrings
 gpg --import < ubuntu-archive-keyring.gpg >/dev/null
 gpg --list-keys | grep 4BD6EC30 >/dev/null
 if [ $? -ne 0 ]; then
-	gpg --recv-key 4BD6EC30 --keyserver pool.sks-keyservers.net >/dev/null
+	gpg --keyserver pool.sks-keyservers.net --recv-key 4BD6EC30 >/dev/null
 fi
 gpg --list-keys | grep 17ED316D >/dev/null
 if [ $? -ne 0 ]; then
-	gpg --recv-key 17ED316D --keyserver pool.sks-keyservers.net >/dev/null
+	gpg --keyserver pool.sks-keyservers.net --recv-key 17ED316D >/dev/null
 fi
+gpg --list-keys | grep EC4926EA >/dev/null
+if [ $? -ne 0 ]; then
+	gpg  --keyserver keyserver.ubuntu.com --recv-key EC4926EA>/dev/null
+fi
+
 rm -f ubuntu-archive-keyring.gpg
 gpg --output=ubuntu-archive-keyring.gpg --export C0B21F32 EFE21092 FBB75451 437D05B5 4BD6EC30 17ED316D "$GPGKEYNAME" >/dev/null
 cd ..
