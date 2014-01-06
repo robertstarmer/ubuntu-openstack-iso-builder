@@ -127,10 +127,13 @@ if [ -f "${HOME}/.gpg-agent-info" ]; then
            export SSH_AUTH_SOCK
 fi
 
-
 gpg --list-keys | grep "$GPGKEYNAME" >/dev/null
 if [ $? -ne 0 ]; then
         echo "No GPG Key found in your keyring."
+  if [ -f $BASEDIR/$GPGKEYEMAIL-secret-key ] ; then
+	echo "Importing previous secret-key"
+	gpg --import  $GPGKEYEMAIL-secret-key
+  else
         echo "Generating a new gpg key ($GPGKEYNAME $GPGKEYCOMMENT) with a passphrase of $GPGKEYPHRASE .."
         echo ""
         echo "Key-Type: DSA
@@ -155,6 +158,12 @@ gpg --gen-key --batch --gen-key $BASEDIR/key.inc
         # y
         # quit
         # y
+
+    echo "Exporting a copy for future use"
+    gpg --export-secret-key --armor ascii $GPGKEYEMAIL > $BASEDIR/$GPGKEYEMAIL-secret-key 
+    gpg --export --armor ascii $GPGKEYEMAIL > $BASEDIR/$GPGKEYEMAIL-public-key 
+
+    fi
 fi
 
 if [ ! -f $CDSOURCEDIR/md5sum.txt ]; then
