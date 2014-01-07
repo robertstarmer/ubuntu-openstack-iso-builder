@@ -530,13 +530,6 @@ libxt6
 libxxf86vm1
 libyajl1
 libyaml-0-2
-linux-firmware
-linux-generic-lts-raring
-linux-headers-3.8.0-34
-linux-headers-3.8.0-34-generic
-linux-headers-generic-lts-raring
-linux-image-3.8.0-34-generic
-linux-image-generic-lts-raring
 linux-libc-dev
 lksctp-tools
 locales
