@@ -493,7 +493,7 @@ cd $BASEDIR/apt
 for name in `cat $BASEDIR/package_list.txt` ; do apt-get download $name ; done
 fi
 
-reprepro -V -b $BASEDIR/FinalCD/mirror includedeb precise ./*.deb
+reprepro -V -b $BASEDIR/FinalCD -C main includedeb precise ./*.deb
 
 cd $BASEDIR/FinalCD
 echo -n "Updating md5 checksums.. "

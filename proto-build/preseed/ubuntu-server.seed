@@ -26,8 +26,8 @@ d-i netcfg/dhcp_options select Configure network manually
 #d-i netcfg/confirm_static boolean true
 
 # Any hostname and domain names assigned from dhcp take precedence over
-d-i netcfg/get_hostname string allinone 
-d-i netcfg/get_domain string domain.name
+#d-i netcfg/get_hostname string allinone 
+#d-i netcfg/get_domain string domain.name
 
 ### Clock and time zone setup
 d-i clock-setup/utc boolean true
@@ -38,21 +38,21 @@ d-i clock-setup/ntp-server string ntp.ubuntu.com
 
 ### Partitioning
 #d-i partman-auto/init_automatically_partition select biggest_free
+d-i partman/default_filesystem string ext4
 d-i partman-auto/disk string /dev/sda
-d-i partman-auto/method string atomic
+d-i partman-auto/method string lvm
+d-i partman-auto/choose_recipe select atomic
 d-i partman-auto/purge_lvm_from_device boolean true
 d-i partman-lvm/device_remove_lvm boolean true
+d-i partman-lvm/confirm boolean true
+d-i partman-auto-lvm/guided_size string 75%
 d-i partman-md/device_remove_md boolean true
 d-i partman-md/confirm boolean true
-d-i partman-lvm/confirm boolean true
 d-i partman/confirm_write_new_label boolean true
-d-i partman-auto/choose_recipe select atomic
-d-i partman/default_filesystem string ext3
-d-i partman-partitioning/confirm_write_new_label boolean true
 d-i partman/choose_partition select finish partitioning and write changes to disk
 d-i partman/confirm boolean true
 d-i partman/confirm_nooverwrite boolean true
-d-i partman-auto-lvm/guided_size string max
+d-i partman-partitioning/confirm_write_new_label boolean true
 ### Base system installation
 ### Account setup
 
@@ -73,7 +73,7 @@ d-i pkgsel/update-policy select none
 d-i pkgsel/install-language-support boolean false
 #tasksel tasksel/first multiselect server
 #d-i pkgsel/include string openssh-server build-essential apache2 python-jinja2 python-daemon python-yaml python-passlib libapache2-mod-wsgi cobbler cobbler-web puppet 
-d-i pkgsel/include string openssh-server apache2
+d-i pkgsel/include string openssh-server apache2 cobbler puppet
 d-i pkgsel/upgrade select none
 ### Boot loader installation
 d-i grub-installer/only_debian boolean true
@@ -86,8 +86,8 @@ mkdir -p /target/var/www/cdrom; cp -R /cdrom/dists /target/var/www/cdrom/ ; \
 cp -R /cdrom/pool /target/var/www/cdrom/ ; \
 cp -R /cdrom/packages /target/var/www/ ; \
 cp /target/etc/apt/sources.list /target/etc/apt/sources.list.orig ; \
-echo 'deb [ arch=amd64 ] http://localhost/mirror precise extras' > /target/etc/apt/sources.list ; \
-echo 'deb http://localhost/cdrom precise main' >> /target/etc/apt/sources.list ; \
+#echo 'deb [ arch=amd64 ] http://localhost/mirror precise extras' > /target/etc/apt/sources.list ; \
+echo 'deb http://localhost/cdrom precise main' > /target/etc/apt/sources.list ; \
 cp -R /cdrom/puppet_openstack_builder /target/root/ ; \
 sed -e 's/\(%sudo.*\)ALL$/\1NOPASSWD: ALL/' -i /target/etc/sudoers ; \
 rm /target/etc/apt/apt.conf ; \
